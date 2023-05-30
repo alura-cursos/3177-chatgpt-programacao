@@ -44,8 +44,11 @@ public class ConsultaController {
 
     @GetMapping("/relatorio-mensal/{mes}")
     public ResponseEntity<List<DadosRelatorioConsultaMensal>> gerarRelatorioConsultaMensal(@PathVariable YearMonth mes) {
-        //var relatorio = consultaRepository.?
-        return ResponseEntity.ok(null);
+        LocalDateTime inicioMes = mes.atDay(1).atStartOfDay();
+        LocalDateTime fimMes = mes.atEndOfMonth().atTime(23, 59, 59);
+
+        List<DadosRelatorioConsultaMensal> relatorio = consultaRepository.gerarRelatorioConsultaMensal(inicioMes, fimMes);
+        return ResponseEntity.ok(relatorio);
     }
 
 }
